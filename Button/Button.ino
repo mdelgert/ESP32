@@ -5,7 +5,6 @@ enum ButtonState { NOT_PRESSED, PRESSED, PRINTED };
 ButtonState currentState = NOT_PRESSED;
 
 void setup() {
-    Serial.begin(115200);
     M5.begin(true, false, true);
     delay(50);
     M5.dis.drawpix(0, 0xff0000);
