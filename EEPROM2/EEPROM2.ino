@@ -70,7 +70,7 @@ void writeSettings(const DeviceSettings &settings) {
 void saveSettings()
 {
   DeviceSettings settings;
-  strcpy(settings.Name, "M5Device1");
+  strcpy(settings.Name, "M5Device2");
   strcpy(settings.SSID, "SSID1");
   strcpy(settings.Password, "pass");
   strcpy(settings.Passcode1, "pass1");

@@ -1,0 +1,6 @@
+{
+    "port": "COM8",
+    "configuration": "PartitionScheme=default,UploadSpeed=1500000,DebugLevel=none,EraseFlash=none",
+    "board": "esp32:esp32:m5stack-atom",
+    "sketch": "EEPROM2\\EEPROM2.ino"
+}
