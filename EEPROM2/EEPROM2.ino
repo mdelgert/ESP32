@@ -1,73 +1,102 @@
-#include <M5Atom.h>
+#include "M5Atom.h"
 #include <EEPROM.h>
 
 struct DeviceSettings {
-  String Name;
-  String SSID;
-  String Password;
+  char Name[21];    // Maximum 20 characters + null terminator
+  char SSID[21];    // Maximum 20 characters + null terminator
+  char Password[41]; // Maximum 40 characters + null terminator
+  char Passcode1[41]; // Maximum 40 characters + null terminator
+  char Passcode2[41]; // Maximum 40 characters + null terminator
+  char Passcode3[41]; // Maximum 40 characters + null terminator
+  char Passcode4[41]; // Maximum 40 characters + null terminator
 };
 
-int addr = 0;  // EEPROM Start number of an ADDRESS.
-//#define SIZE sizeof(DeviceSettings)  // define the size of EEPROM(Byte).
-#define SIZE 180
+#define SIZE sizeof(DeviceSettings)
+
+enum ButtonState { NOT_PRESSED,PRESSED,PRINTED };
+
+ButtonState currentState = NOT_PRESSED;
+
+int addr = 0;
 
 void setup() {
-    M5.begin();                 // Init Atom.
-    if (!EEPROM.begin(SIZE)) {  // Request storage of SIZE size.
-        Serial.println("\nFailed to initialise EEPROM!");
-        delay(1000000);
-    }
-    Serial.println("\nRead data from EEPROM. Values are:");
-    for (int i = 0; i < SIZE; i++) {
-        Serial.printf("%c", EEPROM.read(i));  // Read data from 0 to SIZE in EEPROM.
-    }
-    Serial.println("\n\nPress Btn to Write EEPROM");
+  M5.begin(true, false, true);
+
+  if (!EEPROM.begin(SIZE)) {
+    //Serial.println("\nFailed to initialise EEPROM!");
+    delay(1000000);
+  }
+
+  delay(50);
+  M5.dis.drawpix(0, 0xff0000);
+  Serial.println("\n"); //Print empty line
+  //printSettings(); 
 }
 
-void writeSettingsToDevice(const DeviceSettings &settings) {
-    for (int i = 0; i < SIZE; i++) {
-        if (i < sizeof(settings)) {
-            EEPROM.write(addr + i, *((char*)&settings + i));
-        } else {
-            EEPROM.write(addr + i, 0); // Clear any remaining bytes in EEPROM
-        }
-    }
+DeviceSettings readSettings() {
+  DeviceSettings settings;
+  for (int i = 0; i < SIZE; i++) {
+    *((char*)&settings + i) = EEPROM.read(i);
+  }
+  return settings;
 }
 
-DeviceSettings readSettingsFromDevice() {
-    DeviceSettings settings;
-    for (int i = 0; i < SIZE; i++) {
-        *((char*)&settings + i) = EEPROM.read(addr + i);
-    }
-    return settings;
+void printSettings()
+{
+  DeviceSettings settings = readSettings();
+  Serial.print("Name: ");
+  Serial.println(settings.Name);
+  Serial.print("SSID: ");
+  Serial.println(settings.SSID);
+  Serial.print("Password: ");
+  Serial.println(settings.Password);
+  Serial.print("Passcode1: ");
+  Serial.println(settings.Passcode1);
+  Serial.print("Passcode2: ");
+  Serial.println(settings.Passcode2);
+  Serial.print("Passcode3: ");
+  Serial.println(settings.Passcode3);
+  Serial.print("Passcode4: ");
+  Serial.println(settings.Passcode4);
+}
+
+void writeSettings(const DeviceSettings &settings) {
+  for (int i = 0; i < SIZE; i++) {
+    EEPROM.write(i, *((char*)&settings + i));
+  }
+  EEPROM.commit();
+}
+
+void saveSettings()
+{
+  DeviceSettings settings;
+  strcpy(settings.Name, "M5Device1");
+  strcpy(settings.SSID, "SSID1");
+  strcpy(settings.Password, "pass");
+  strcpy(settings.Passcode1, "pass1");
+  strcpy(settings.Passcode2, "pass2");
+  strcpy(settings.Passcode3, "pass3");
+  strcpy(settings.Passcode4, "pass4");
+  writeSettings(settings);
 }
 
 void loop() {
-    M5.update();  // Check button down state.
-    if (M5.Btn.isPressed()) {  // if the button is Pressed.
-        Serial.println("\n\nWrite data to EEPROM");
-        // Initialize DeviceSettings struct
-        DeviceSettings mySettings;
-        mySettings.Name = "d1";
-        mySettings.SSID = "wap1";
-        mySettings.Password = "password~!@#$%^&*()1234567890";
-
-        // Write settings to EEPROM
-        writeSettingsToDevice(mySettings);
-
-        // Read settings from EEPROM
-        DeviceSettings readSettings = readSettingsFromDevice();
-
-        // Print out the read data
-        Serial.println("\nRead settings:");
-        Serial.print("Name: ");
-        Serial.println(readSettings.Name);
-        Serial.print("SSID: ");
-        Serial.println(readSettings.SSID);
-        Serial.print("Password: ");
-        Serial.println(readSettings.Password);
-
-        Serial.println("\n-------------------------------------\n");
+  if (M5.Btn.isPressed()) {
+    M5.dis.drawpix(0, 0x0000f0);
+    if (currentState == NOT_PRESSED) {
+      currentState = PRESSED;
+      saveSettings();
+      printSettings();
     }
-    delay(150);
+  } else {
+    if (currentState == PRESSED) {
+      currentState = PRINTED;
+    } else if (currentState == PRINTED) {
+      currentState = NOT_PRESSED;
+      M5.dis.drawpix(0, 0xff0000);
+    }
+  }
+
+  delay(50);
+  M5.update();
 }

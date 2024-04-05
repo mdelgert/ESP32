@@ -17,6 +17,10 @@ https://github.com/h2zero/NimBLE-Arduino/blob/e46123a084e0aa336e4cbdd52bf001dac7
 https://novelbits.io/bluetooth-hid-device-design-example-project/
 https://github.com/nutki/bt-keyboard-switcher
 https://learn.adafruit.com/mouse-and-keyboard-control-using-tinyusb-and-ble/keyboard-example
+https://github.com/Heerkog/MicroPythonBLEHID
 
 # Raspberry Pi K(V)M (USB - Bluetooth)
 https://github.com/BLeeEZ/rpi-kvm/tree/main
+
+# Chip Series Comparison
+https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32s3/hw-reference/chip-series-comparison.html
