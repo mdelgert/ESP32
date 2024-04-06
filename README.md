@@ -29,3 +29,8 @@ https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32s3/hw-reference/chip-se
 https://colddsam.medium.com/exploring-the-world-of-arduino-programming-in-visual-studio-code-bbcb4af982e7
 https://arduino.github.io/arduino-cli/0.35/installation/
 https://learn.sparkfun.com/tutorials/efficient-arduino-programming-with-arduino-cli-and-visual-studio-code/all
+
+# Create sketch
+```pwsh
+arduino-cli sketch new NameOfSketch
+```
