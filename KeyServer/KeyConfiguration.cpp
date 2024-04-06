@@ -1,11 +1,33 @@
 #include "KeyConfiguration.h"
 #include "KeySettings.h"
+#include "KeyWeb.h"
 
 void helpMenu() {
   Serial.println("\nHelp:");
   Serial.println("p - Print current settings");
   Serial.println("s - Set device settings");
   Serial.println("h - Display this help menu");
+  Serial.println("w - Display webserver info");
+}
+
+void configurationMenu() {
+  if (Serial.available() > 0) {
+    char option = Serial.read();  // Read user's option
+    switch (option) {
+      case 'p':
+        printSettings();
+        break;
+      case 's':
+        setDeviceSettingsMenu();
+        break;
+      case 'h':
+        helpMenu();
+        break;
+      case 'w':
+        keyWebPrint();
+        break;
+    }
+  }
 }
 
 void setDeviceSettingsMenu() {
@@ -36,23 +58,6 @@ void readSerial(char* data, int maxLength) {
       }
       data[i] = '\0';  // Null terminate the string
       return;
-    }
-  }
-}
-
-void configurationMenu() {
-  if (Serial.available() > 0) {
-    char option = Serial.read();  // Read user's option
-    switch (option) {
-      case 'p':
-        printSettings();
-        break;
-      case 's':
-        setDeviceSettingsMenu();
-        break;
-      case 'h':
-        helpMenu();
-        break;
     }
   }
 }

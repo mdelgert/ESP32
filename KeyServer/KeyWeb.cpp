@@ -1,3 +1,4 @@
+#include "BleKeyboard.h"
 #include "KeyWeb.h"
 #include "KeySettings.h"
 #include "HtmlContent.h"
@@ -7,9 +8,17 @@
 #include <ESPmDNS.h>
 #include <ArduinoJson.h>
 
+BleKeyboard bleKeyboard("BleKeyServer", "Demo Inc.", 100);
+DeviceSettings settings;
 WebServer server(80);
 
-//void keyWebPrint(){}
+void keyWebPrint(){
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(settings.SSID);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+}
 
 void keyWebClient()
 {
@@ -17,8 +26,7 @@ void keyWebClient()
 }
 
 void keyWebSetup() {
-
-  DeviceSettings settings = readSettings();
+  settings = readSettings();
   // Connect to Wi-Fi
   WiFi.begin(settings.SSID, settings.Password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -27,13 +35,7 @@ void keyWebSetup() {
   }
   
   // Print server details
-  //keyWebPrint();
-
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(settings.SSID);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+  keyWebPrint();
 
   // Route to handle POST request to "/message"
   server.on("/message", HTTP_POST, keyWebMessage);
@@ -47,10 +49,12 @@ void keyWebSetup() {
   Serial.println("HTTP server started");
 
   // Set up mDNS responder
-  if (!MDNS.begin("esp32")) {
+  if (!MDNS.begin(settings.Name)) {
     Serial.println("Error setting up MDNS responder!");
   }
   Serial.println("mDNS responder started");
+
+  bleKeyboard.begin();
 }
 
 void keyWebMessage() {
@@ -77,6 +81,9 @@ void keyWebMessage() {
   // Print received message
   Serial.print("Received message: ");
   Serial.println(msg);
+  
+  //bleKeyboard.print(msg);
+  bleKeyboard.println(msg);
 
   // Send response to client
   server.send(200, "text/plain", "Message received successfully");
