@@ -155,7 +155,11 @@ void BleMouse::taskServer(void* pvParameter) {
 
   BLESecurity *pSecurity = new BLESecurity();
 
+  //https://github.com/search?q=repo%3Ankolban%2Fesp32-snippets%20setStaticPIN&type=code
+  //https://github.com/nkolban/esp32-snippets/blob/master/cpp_utils/tests/BLETests/Arduino/security/StaticPIN/StaticPIN.ino
+  
   pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
+  //pSecurity->setStaticPIN(1234); 
 
   bleMouseInstance->hid->reportMap((uint8_t*)_hidReportDescriptor, sizeof(_hidReportDescriptor));
   bleMouseInstance->hid->startServices();
