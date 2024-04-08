@@ -39,11 +39,12 @@ void setup() {
   StickCP2.Display.setTextDatum(middle_center);
   StickCP2.Display.setTextFont(&fonts::Orbitron_Light_24);
   StickCP2.Display.setTextSize(2);
-  StickCP2.Display.drawString("Encoder", StickCP2.Display.width() / 2, StickCP2.Display.height() / 2);
+  StickCP2.Display.setBrightness(75);
+  StickCP2.Display.drawString("ENC", StickCP2.Display.width() / 2, StickCP2.Display.height() / 2);
   sensor.begin(&Wire, MINIENCODERC_ADDR, 0, 26, 100000UL);
   delay_time = 20;
   i2c_address = sensor.getI2CAddress();
-  sensor.setLEDColor(1, 0x000011);
+  //sensor.setLEDColor(1, 0x000011);
 }
 
 void loop() {
@@ -52,6 +53,8 @@ void loop() {
     StickCP2.Speaker.tone(8000, 20);
     StickCP2.Display.clear();
     StickCP2.Display.drawString("Pressed", StickCP2.Display.width() / 2, StickCP2.Display.height() / 2);
+    Serial.println(StickCP2.Display.width());
+    Serial.println(StickCP2.Display.height());
     sensor.resetCounter();
   }
 
