@@ -1,3 +1,8 @@
+# Setup
+```bash
+git clone git@github.com:mdelgert/ESP32.git
+```
+
 # ESP32
 https://github.com/T-vK/ESP32-BLE-Keyboard
 https://github.com/T-vK/ESP32-BLE-Mouse/tree/master

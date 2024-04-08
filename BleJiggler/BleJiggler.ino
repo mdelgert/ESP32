@@ -1,7 +1,7 @@
 #include "M5Atom.h"
 #include "BleMouse.h"
 
-BleMouse bleMouse("Razer Mouse V1", "Razer Inc.", 100); // Create an instance of BleMouse with custom device name, manufacturer, and battery level
+BleMouse bleMouse("Razer Mouse V3", "Razer Inc.", 100); // Create an instance of BleMouse with custom device name, manufacturer, and battery level
 
 enum ButtonState { NOT_PRESSED,
                    PRESSED,
