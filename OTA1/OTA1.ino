@@ -35,24 +35,24 @@ void setup() {
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
-    M5.dis.drawpix(0, 0xfff000);
+    M5.dis.drawpix(0, 0xfff000);  // YELLOW
     Serial.print(".");
-    printWifi();
-    //ArduinoOTA.setHostname(settings.HostName);
-    //ArduinoOTA.setPassword(settings.PasswordOTA);
-    ArduinoOTA.setHostname("ATOM1");
-    ArduinoOTA.setPassword("password");
-    ArduinoOTA.begin();
-    Serial.println("OTA ready!");
-    M5.dis.drawpix(0, 0x00ff00);  // GREEN
   }
+
+  printWifi();
+  //ArduinoOTA.setHostname(settings.HostName);
+  //ArduinoOTA.setPassword(settings.PasswordOTA);
+  ArduinoOTA.setHostname("ATOM1");
+  ArduinoOTA.setPassword("666666");
+  ArduinoOTA.begin();
+  Serial.println("OTA ready!");
+  M5.dis.drawpix(0, 0x00ff00);  // GREEN
 }
 
 void loop() {
   ArduinoOTA.handle();
-  configurationMenu();
-  delay(50);
   M5.update();
+  configurationMenu();
 }
 
 void configurationMenu() {
