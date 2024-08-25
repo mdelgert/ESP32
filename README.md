@@ -1,3 +1,8 @@
+# Grant Ubuntu dialout
+```bash
+sudo usermod -a -G dialout mdelgert
+```
+
 # Setup
 ```bash
 git clone git@github.com:mdelgert/ESP32.git
@@ -39,4 +44,3 @@ https://learn.sparkfun.com/tutorials/efficient-arduino-programming-with-arduino-
 ```pwsh
 arduino-cli sketch new NameOfSketch
 ```
-
