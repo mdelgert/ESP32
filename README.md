@@ -3,6 +3,11 @@
 sudo usermod -a -G dialout mdelgert
 ```
 
+# ESP32 setup and links
+https://www.waveshare.com/wiki/ESP32-S3-GEEK#Arduino
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+https://www.waveshare.com/esp32-s3-geek.htm
+
 # Setup
 ```bash
 git clone git@github.com:mdelgert/ESP32.git
