@@ -1,5 +1,11 @@
 #include <TFT_eSPI.h>      // Include the graphics library
 #include <OneButton.h>     // Include the OneButton library
+#include "USB.h"
+#include "USBHIDKeyboard.h"
+
+USBHIDKeyboard Keyboard;
+
+//Must hold reset to flash again in the future, mayrequire hold reset before plugging into USB port
 
 TFT_eSPI tft = TFT_eSPI(); // Create an instance of the TFT_eSPI class
 
@@ -41,6 +47,12 @@ void setup() {
   button.attachClick(handleClick);
   button.attachDoubleClick(handleDoubleClick);
   button.attachLongPressStart(handleLongPressStart);
+
+  USB.begin();         // Start the USB stack
+  delay(50);           // Small delay to ensure the system is ready
+
+  Keyboard.begin();    // Start the keyboard emulation
+  delay(50);           // Small delay to ensure the system is ready
 }
 
 void loop() {
@@ -53,6 +65,7 @@ void handleClick() {
   tft.fillScreen(SCREEN_COLOR); // Clear the screen with defined screen color
   tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);
   tft.println("Clicked!"); // Display "Clicked!" message
+  Keyboard.print("Clicked!");
 }
 
 // Function to handle a double-click
@@ -60,6 +73,7 @@ void handleDoubleClick() {
   tft.fillScreen(SCREEN_COLOR); // Clear the screen with defined screen color
   tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);
   tft.println("Double!"); // Display "Double Clicked!" message
+  Keyboard.print("Double!");
 }
 
 // Function to handle a long press
@@ -67,4 +81,6 @@ void handleLongPressStart() {
   tft.fillScreen(SCREEN_COLOR); // Clear the screen with defined screen color
   tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);
   tft.println("Long!"); // Display "Long Pressed!" message
+  Keyboard.print("Long!");
 }
+
