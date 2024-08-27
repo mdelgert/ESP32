@@ -6,9 +6,6 @@
 int counter = 1;  // Initialize a counter variable
 
 void setup() {
-  // Initialize the serial communication at a baud rate of 115200
-  Serial.begin(115200);
-
   Config_Init();
   LCD_Init();
   LCD_SetBacklight(100);
@@ -24,7 +21,7 @@ void setup() {
 void loop() {
   // Create a string to hold the message with the counter value
   char message[30];
-  sprintf(message, "Hello, World! %d", counter);
+  sprintf(message, "Hello %d", counter);
 
   // Display the message on the LCD
   Paint_DrawString_EN(20, 50, message, &Font20, BLACK, WHITE);
@@ -38,5 +35,4 @@ void loop() {
   // Wait
   delay(5000);
   LCD_Clear(BLACK);
-  
 }

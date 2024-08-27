@@ -1,0 +1,6 @@
+{
+  "action": "mouse",
+  "message": "Hello mouse",
+  "mouseX": 1,
+  "mouseY": 1
+}
