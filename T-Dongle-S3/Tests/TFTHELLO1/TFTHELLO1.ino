@@ -15,7 +15,7 @@ void setup() {
   tft.setCursor(20, 30);
   
   // Print "Hello World" on the screen
-  tft.println("Hello World");
+  tft.println("Hello1");
 }
 
 void loop() {
