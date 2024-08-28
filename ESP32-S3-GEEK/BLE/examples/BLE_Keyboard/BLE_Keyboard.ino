@@ -32,5 +32,5 @@ void loop() {
   }
 
   Serial.println("Waiting 5 seconds...");
-  delay(5000);
+  delay(50000);
 }
