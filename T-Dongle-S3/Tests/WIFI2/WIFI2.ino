@@ -70,7 +70,7 @@ void setup() {
   } else {
     Serial.println("No WAP and PASSWORD saved in preferences.");
   }
-
+I 
   // Set up Access Point with default IP (192.168.4.1)
   WiFi.softAP(ssid, password);
 
