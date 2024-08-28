@@ -50,10 +50,12 @@ const char htmlPage[] PROGMEM = R"rawliteral(
   <div class='container'>
     <h1>Enter WAP and PASSWORD</h1>
     <form action="/submit" method="POST">
-      WAP: <br><input type="text" name="wap"><br>
-      PASSWORD: <br><input type="password" name="password"><br>
+      WAP: <br><input type="text" name="wap" value="%WAP%"><br>
+      PASSWORD: <br><input type="password" name="password" value="%PASSWORD%"><br>
       <input type="submit" value="Submit">
     </form>
+    <p>Current WAP: %WAP%</p>
+    <p>Current PASSWORD: %PASSWORD%</p>
   </div>
 </body>
 </html>
