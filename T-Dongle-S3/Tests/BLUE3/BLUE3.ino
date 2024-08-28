@@ -3,7 +3,7 @@
  */
 #include "BleKeyboard.h"
 
-BleKeyboard bleKeyboard("BLUE3", "Waveshare", 100);
+BleKeyboard bleKeyboard("ESP32_BT", "Waveshare", 100);
 
 void setup() {
   Serial.begin(115200);
