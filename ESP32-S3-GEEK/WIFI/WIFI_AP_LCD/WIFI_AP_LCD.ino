@@ -5,8 +5,8 @@
 #include "WIFI_Driver.h"
 
 // Set these to your desired credentials.
-const char *ssid = "ESP32-S3-GEEK";
-const char *password = "Waveshare";
+const char *ssid = "ESP32WAP";
+const char *password = "password";
 
 WiFiServer server(80);
 WiFiClient client;
