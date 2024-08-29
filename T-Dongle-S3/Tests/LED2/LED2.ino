@@ -1,3 +1,4 @@
+#define FASTLED_INTERNAL //remove annoying pragma messages -https://github.com/FastLED/FastLED/issues/1169
 #include "pin_config.h"
 #include <FastLED.h> 
 
@@ -20,8 +21,8 @@ void setup() {
 
   //leds = CRGB::Red;
   //leds = CRGB::Blue;
-  //leds = CRGB::Green;
-  //FastLED.show();
+  leds = CRGB::Green;
+  FastLED.show();
   //xTaskCreatePinnedToCore(led_task, "led_task", 1024, NULL, 1, NULL, 0);
 }
 

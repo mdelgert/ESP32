@@ -1,3 +1,4 @@
+#define FASTLED_INTERNAL //remove annoying pragma messages -https://github.com/FastLED/FastLED/issues/1169
 #include "pin_config.h"
 #include <FastLED.h> 
 
