@@ -3,7 +3,7 @@
 
 #include <Preferences.h>
 #include <ArduinoJson.h>
-#include "Config.h"
+#include "SettingsConfig.h"
 
 struct DeviceSettings {
   String ssid;
@@ -75,19 +75,19 @@ private:
   Preferences preferences;
 
   void setDefaultSettings(DeviceSettings& settings) {
-    settings.setup_mode = true;
+    settings.setup_mode = SETUP_MODE;
     settings.ssid = DEFAULT_SSID;
     settings.password = DEFAULT_PASSWORD;
     settings.device_name = DEFAULT_DEVICE_NAME;
     settings.admin_user = DEFAULT_ADMIN;
     settings.admin_password = DEFAULT_ADMIN_PASSWORD;
-    settings.mqtt_broker = "";
-    settings.mqtt_port = 1883;
-    settings.mqtt_topic = "";
-    settings.mqtt_user = "";
-    settings.mqtt_password = "";
-    settings.mqtt_certificate_enable = false;
-    settings.mqtt_certificate = "";
+    settings.mqtt_broker = MQTT_BROKER;
+    settings.mqtt_port = MQTT_PORT;
+    settings.mqtt_topic = MQTT_TOPIC;
+    settings.mqtt_user = MQTT_USER;
+    settings.mqtt_password = MQTT_PASSWORD;
+    settings.mqtt_certificate_enable = MQTT_CERTIFICATE_ENABLE;
+    settings.mqtt_certificate = MQTT_CERTIFICATE;
   }
 };
 
