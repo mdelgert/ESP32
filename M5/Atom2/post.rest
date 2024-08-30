@@ -1,0 +1,26 @@
+POST http://192.168.4.1/reset HTTP/1.1
+Content-Type: application/json
+
+{
+    "wifi": {
+        "ssid": "lilygo1",
+        "password": "password",
+        "accesspoint": true
+    },
+    "mqtt": {
+        "broker": "example.com",
+        "port": 8883,
+        "topic": "lilygo/topic/1",
+        "user": "user1",
+        "password": "password1",
+        "certificate_enable": false,
+        "certificate": "1234567890abcdefghijklmnopqrstuvwxyz"
+    },
+    "device": {
+        "name": "device1",
+        "jiggler": true,
+        "setup_mode": false,
+        "keyboard_enable": true
+    }
+}
+

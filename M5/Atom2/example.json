@@ -1,0 +1,21 @@
+{
+    "wifi": {
+        "ssid": "lilygo1",
+        "password": "password"
+    },
+    "mqtt": {
+        "broker": "example.com",
+        "port": 8883,
+        "topic": "lilygo/topic/1",
+        "user": "user1",
+        "password": "password1",
+        "certificate_enable": false,
+        "certificate": "1234567890abcdefghijklmnopqrstuvwxyz~@#$%^&*()_+?><|\/.,;'][=-`"
+    },
+    "device": {
+        "name": "device1",
+        "jiggler": true,
+        "setup_mode": false,
+        "keyboard_enable": true
+    }
+}
