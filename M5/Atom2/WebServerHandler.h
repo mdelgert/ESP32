@@ -85,6 +85,16 @@ void connectToWiFi(const DeviceSettings& settings) {
   }
 }
 
+void handleClearSettings() {
+  settingsManager.clearSettings();
+  server.send(200, "application/json", "{\"status\":\"settings cleared\"}");
+  Serial.println("All settings cleared from preferences.");
+}
+
+void handleWebServerClient() {
+  server.handleClient();
+}
+
 void setupWebServer() {
   DeviceSettings settings;
   settingsManager.loadSettings(settings);
@@ -131,14 +141,11 @@ void setupWebServer() {
 
   server.on("/settings/get", HTTP_GET, handleGetSettings);
   server.on("/settings/set", HTTP_POST, handleSetSettings);
+  server.on("/settings/clear", HTTP_POST, handleClearSettings);  // New endpoint to clear settings
   server.on("/message", HTTP_POST, handlePostMessage);
   server.on("/reboot", HTTP_POST, handleReboot);
 
   server.begin();
-}
-
-void handleWebServerClient() {
-  server.handleClient();
 }
 
 #endif // WEBSERVERHANDLER_H

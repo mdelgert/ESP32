@@ -65,6 +65,12 @@ public:
     preferences.end();
   }
 
+  void clearSettings() {
+    preferences.begin("settings", false);
+    preferences.clear();  // Clears all keys under the "settings" namespace
+    preferences.end();
+  }
+
 private:
   Preferences preferences;
 
