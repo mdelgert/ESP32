@@ -1,0 +1,1 @@
+Please add logic if setup_mode = true, ssid = ESP32WAP password = 12345678 and device_name = Atom1
