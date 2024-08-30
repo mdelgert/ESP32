@@ -1,7 +1,9 @@
 {
     "wifi": {
         "ssid": "lilygo1",
-        "password": "password"
+        "password": "password",
+        "accesspoint": true,
+        "device_name": "atom1"
     },
     "mqtt": {
         "broker": "example.com",
@@ -10,7 +12,7 @@
         "user": "user1",
         "password": "password1",
         "certificate_enable": false,
-        "certificate": "1234567890abcdefghijklmnopqrstuvwxyz~@#$%^&*()_+?><|\/.,;'][=-`"
+        "certificate": "1234567890abcdefghijklmnopqrstuvwxyz"
     },
     "device": {
         "name": "device1",

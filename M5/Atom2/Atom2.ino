@@ -15,7 +15,7 @@ void setup() {
   Serial.print("IP Address: ");
   Serial.println(WiFi.softAPIP());
 
-  // Initialize the web server
+  // Initialize the web server and print saved settings
   setupWebServer();
 
   Serial.println("Server started");
