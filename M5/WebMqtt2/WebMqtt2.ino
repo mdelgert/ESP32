@@ -1,27 +1,23 @@
 #include "M5Atom.h"
-//#include <FastLED.h>
+// #include <FastLED.h>
 #include <WiFi.h>
-#include "SecureConfig.h"       // Include the SecureConfig.h file
-#include "WebServerHandler.h"   // Include the WebServerHandler header
-#include "MqttHandler.h"        // Include the MqttHandler header
+#include "SecureConfig.h"     // Include the SecureConfig.h file
+#include "WebServerHandler.h" // Include the WebServerHandler header
+#include "MqttHandler.h"      // Include the MqttHandler header
 
-void setup() {
+void setup()
+{
   M5.begin(true, false, true);
-  // M5.dis.drawpix(0, 0x0000f0);  // BLUE
-  // M5.dis.fillpix(0xff0000);  // RED
-  // M5.dis.fillpix(0x00ff00);  // GREEN
-  // M5.dis.fillpix(0xfff000);  // YELLOW
-  M5.dis.fillpix(0xFFFFFF); //WHITE
-  
-  // Start serial communication
-  //Serial.begin(115200);
+  M5.dis.fillpix(0xFFFFFF); // WHITE
 
   // Connect to Wi-Fi
   Serial.print("Connecting to ");
   Serial.println(DEFAULT_SSID);
   WiFi.begin(DEFAULT_SSID, DEFAULT_PASSWORD);
 
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    M5.dis.fillpix(0xFFFF00); // YELLOW
     delay(1000);
     Serial.print(".");
   }
@@ -38,10 +34,21 @@ void setup() {
   initMqttClient();
 }
 
-void loop() {
+void loop()
+{
   // Handle web server requests
   handleWebServerClient();
 
   // Handle MQTT client tasks
   handleMqttClient();
+
+  // Check if the button was pressed
+  if (M5.Btn.wasPressed())
+  {
+    Serial.println("Button was pressed!");
+    sendHelloMessage(); // Send a "hello" message to the MQTT topic
+  }
+
+  delay(50);
+  M5.update();
 }

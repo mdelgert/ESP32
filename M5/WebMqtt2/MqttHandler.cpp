@@ -1,3 +1,4 @@
+#include "M5Atom.h"
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include "SecureConfig.h"
@@ -29,11 +30,14 @@ void connectToMqtt() {
   while (!mqttClient.connected()) {
     Serial.print("Connecting to MQTT broker...");
     if (mqttClient.connect(DEFAULT_DEVICE_NAME, MQTT_USER, MQTT_PASSWORD)) {
+      M5.dis.fillpix(0x0000FF); // BLUE
+      //M5.dis.fillpix(0xFF00FF); // MAGENTA
       Serial.println("connected");
       mqttClient.subscribe(MQTT_TOPIC);
       Serial.print("Subscribed to topic: ");
       Serial.println(MQTT_TOPIC);
     } else {
+      M5.dis.fillpix(0xFF0000); // RED
       Serial.print("failed, rc=");
       Serial.print(mqttClient.state());
       Serial.println(" try again in 5 seconds");
@@ -54,4 +58,17 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   Serial.println(message);
   
   // Handle the message here (e.g., parse JSON, control hardware, etc.)
+}
+
+// Function to send a "hello" message to the MQTT topic
+void sendHelloMessage() {
+  // Create a JSON message
+  String jsonMessage = "{\"message\": \"hello\"}";
+
+  // Publish the message to the MQTT topic
+  if (mqttClient.publish(MQTT_TOPIC, jsonMessage.c_str())) {
+    Serial.println("Hello message sent successfully.");
+  } else {
+    Serial.println("Failed to send hello message.");
+  }
 }

@@ -3,8 +3,8 @@
 
 void initMqttClient();
 void handleMqttClient();
-void connectToMqtt();           // Declare the connectToMqtt function
-void mqttCallback(char* topic, byte* payload, unsigned int length);  // Declare the mqttCallback function
+void connectToMqtt();
+void mqttCallback(char* topic, byte* payload, unsigned int length);
+void sendHelloMessage();  // Declare the sendHelloMessage function
 
 #endif // MQTTHANDLER_H
-
