@@ -18,4 +18,10 @@
 #define MQTT_CERTIFICATE_ENABLE false
 #define MQTT_CERTIFICATE ""
 
+// Web server configuration
+#define SERVER_PORT 80
+
+// Firmware version
+#define FIRMWARE_VERSION "1.0.0"
+
 #endif // CONFIG_H
