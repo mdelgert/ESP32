@@ -14,7 +14,8 @@
 
 // Include the PNG decoder library
 #include <PNGdec.h>
-#include "panda.h" // Image is stored here in an 8 bit array
+//#include "ImageKey.h" // Image is stored here in an 8 bit array
+#include "ImageWifi.h" // Image is stored here in an 8 bit array
 
 PNG png; // PNG decoder inatance
 
@@ -29,40 +30,39 @@ int16_t ypos = 0;
 #include <TFT_eSPI.h>              // Hardware-specific library
 TFT_eSPI tft = TFT_eSPI();         // Invoke custom library
 
-//====================================================================================
-//                                    Setup
-//====================================================================================
 void setup()
 {
   // Initialise the TFT
   tft.begin();
+  tft.setRotation(3); // Set rotation to flip the screen
   tft.fillScreen(TFT_BLACK);
-}
+  //tft.fillScreen(TFT_WHITE);
 
-//====================================================================================
-//                                    Loop
-//====================================================================================
-void loop()
-{
-  int16_t rc = png.openFLASH((uint8_t *)panda, sizeof(panda), pngDraw);
+  //Draw png image
+  //int16_t rc = png.openFLASH((uint8_t *)ImageKey, sizeof(ImageKey), pngDraw);
+  int16_t rc = png.openFLASH((uint8_t *)ImageWifi, sizeof(ImageWifi), pngDraw);
+
   if (rc == PNG_SUCCESS) {
     tft.startWrite();
     uint32_t dt = millis();
     rc = png.decode(NULL, 0);
     tft.endWrite();
-    // png.close(); // not needed for memory->memory decode
   }
-  delay(3000);
-  tft.fillScreen(random(0x10000));
+  
+  //tft.setCursor(0, 0);
+  tft.setCursor(20, 30);
+  //tft.setTextColor(TFT_WHITE, TFT_BLACK); // Set text color to white and background to black
+  tft.setTextColor(TFT_WHITE);  // Only set the text color, no background color so its transparent
+  tft.setTextSize(2); // Set text size to 2x the default size
+  tft.println("WIFI!");
+
 }
 
-//=========================================v==========================================
-//                                      pngDraw
-//====================================================================================
-// This next function will be called during decoding of the png file to
-// render each image line to the TFT.  If you use a different TFT library
-// you will need to adapt this function to suit.
-// Callback function to draw pixels to the display
+void loop()
+{
+  //Do stuff here
+}
+
 void pngDraw(PNGDRAW *pDraw) {
   uint16_t lineBuffer[MAX_IMAGE_WDITH];
   png.getLineAsRGB565(pDraw, lineBuffer, PNG_RGB565_BIG_ENDIAN, 0xffffffff);
