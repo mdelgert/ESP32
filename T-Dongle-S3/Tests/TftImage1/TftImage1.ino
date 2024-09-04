@@ -1,6 +1,6 @@
-
 #include "Arduino.h"
 #include "logo.h"
+//#include "image.h"
 #include "TFT_eSPI.h"
 #include "Config.h"
 
@@ -15,6 +15,7 @@ void setup() {
   tft.setTextFont(1);
   tft.setTextColor(TFT_GREEN, TFT_BLACK);
   tft.pushImage(0, 0, 160, 80, (uint16_t *)gImage_logo);
+  //tft.pushImage(0, 0, 160, 80, gImage_logo); // Use your converted image array
 }
 
 void loop() {
