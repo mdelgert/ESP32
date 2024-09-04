@@ -35,7 +35,7 @@ void setup() {
   tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);
   
   // Print "Hello World" on the screen initially
-  tft.println("Hello!");
+  tft.println("Start");
 
   // Attach functions to button events
   button.attachClick(handleClick);
