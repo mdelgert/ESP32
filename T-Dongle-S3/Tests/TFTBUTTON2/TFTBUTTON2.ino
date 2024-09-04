@@ -1,13 +1,11 @@
 #include <TFT_eSPI.h>      // Include the graphics library
 #include <OneButton.h>     // Include the OneButton library
+#include "Config.h"
 
 TFT_eSPI tft = TFT_eSPI(); // Create an instance of the TFT_eSPI class
 
-// Define the button pin as 0
-const int buttonPin = 0;
-
 // Create an instance of the OneButton class
-OneButton button(buttonPin, true);
+OneButton button(BTN_PIN, true);
 
 // Define screen and text properties
 #define SCREEN_COLOR     TFT_BLACK
@@ -35,7 +33,7 @@ void setup() {
   tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);
   
   // Print "Hello World" on the screen initially
-  tft.println("Start");
+  tft.println("Start!");
 
   // Attach functions to button events
   button.attachClick(handleClick);
