@@ -1,0 +1,76 @@
+#include <TFT_eSPI.h>
+#include <OneButton.h>
+#include "ConfigSecure.h"
+
+TFT_eSPI tft = TFT_eSPI(); // Create an instance of the TFT_eSPI class
+
+// Create an instance of the OneButton class
+OneButton button(BTN_PIN, true);
+
+// Function declarations
+void handleClick();
+void handleDoubleClick();
+void handleLongPressStart();
+void displayMessage(const char* message);
+
+void setup()
+{
+    // Initialize the TFT display
+    tft.init();
+    tft.setRotation(3); // Set rotation to flip the screen
+
+    tft.fillScreen(SCREEN_COLOR);                  // Clear the screen with defined screen color
+    tft.setTextColor(TEXT_COLOR, TEXT_BACKGROUND); // Set text color and background
+    tft.setTextSize(TEXT_SIZE);                    // Set text size
+
+    // Print "Start!" on the screen initially
+    displayMessage("Start!");
+
+    // Attach functions to button events
+    button.attachClick(handleClick);
+    button.attachDoubleClick(handleDoubleClick);
+    button.attachLongPressStart(handleLongPressStart);
+    button.attachDuringLongPress(handleVeryLongPress);
+}
+
+void loop()
+{
+    // Continuously check the button status
+    button.tick();
+}
+
+// Function to handle a single click
+void handleClick()
+{
+    displayMessage("Clicked!");
+}
+
+// Function to handle a double-click
+void handleDoubleClick()
+{
+    displayMessage("Double!");
+}
+
+// Function to handle a long press
+void handleLongPressStart()
+{
+    displayMessage("Long!");
+}
+
+// Function to handle a very long press
+void handleVeryLongPress()
+{
+    static unsigned long lastMillis = 0;
+    if (millis() - lastMillis >= LONG_PRESS) {  // Check if LONG_PRESS seconds have passed
+        displayMessage("Long Press!");
+        lastMillis = millis();  // Reset timer
+    }
+}
+
+// Centralized function to display a message on the TFT screen
+void displayMessage(const char* message)
+{
+    tft.fillScreen(SCREEN_COLOR); // Clear the screen with defined screen color
+    tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);  // Set cursor position
+    tft.println(message);  // Print the message to the screen
+}
