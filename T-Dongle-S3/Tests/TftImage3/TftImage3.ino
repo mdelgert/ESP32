@@ -37,6 +37,8 @@ void loop() {
     drawImage();  // Draw the new image
     lastImageSwitch = millis();  // Reset the timer
   }
+
+  delay(3000); 
 }
 
 // Reusable function to draw the current image
