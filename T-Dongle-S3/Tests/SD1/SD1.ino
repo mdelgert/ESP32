@@ -6,11 +6,26 @@
 #include "pin_config.h"
 #include "sdmmc_cmd.h"
 #include <TFT_eSPI.h>  // Include the TFT library
+#include "FS.h"        // For file system access
+#include "SD_MMC.h"    // For SD card access
 
 USBMSC MSC;
 TFT_eSPI tft = TFT_eSPI();  // Create an instance of TFT display
 #define MOUNT_POINT "/sdcard"
 sdmmc_card_t *card;
+
+// Unified print function that prints to both TFT and SD card
+void printMessage(const char* message, bool logToFile = false) {
+  tft.println(message);  // Print to TFT
+
+  if (logToFile) {
+    File logFile = SD_MMC.open("/log.txt", FILE_APPEND);
+    if (logFile) {
+      logFile.println(message);  // Append message to log file on SD card
+      logFile.close();
+    }
+  }
+}
 
 void sd_init(void) {
   esp_err_t ret;
@@ -46,17 +61,21 @@ void sd_init(void) {
   ret = esp_vfs_fat_sdmmc_mount(mount_point, &host, &slot_config, &mount_config, &card);
   if (ret != ESP_OK) {
     if (ret == ESP_FAIL) {
-      tft.println("Failed to mount filesystem.");
+      printMessage("Failed to mount filesystem.", true);
     } else {
-      tft.printf("Failed to initialize card: %s\n", esp_err_to_name(ret));
+      char errStr[100];
+      snprintf(errStr, sizeof(errStr), "Failed to initialize card: %s", esp_err_to_name(ret));
+      printMessage(errStr, true);
     }
     return;
   }
 
-  // Print card information to TFT display
-  tft.println("Mounted:");
-  tft.printf("Name: %s\n", card->cid.name);
-  tft.printf("Size: %llu MB\n", (uint64_t)(card->csd.capacity) * card->csd.sector_size / (1024 * 1024));
+  // Print card information to TFT display and log to SD card
+  printMessage("SD card mounted:", true);
+  printMessage(card->cid.name, true);
+  char sizeStr[50];
+  snprintf(sizeStr, sizeof(sizeStr), "Size: %llu MB", (uint64_t)(card->csd.capacity) * card->csd.sector_size / (1024 * 1024));
+  printMessage(sizeStr, true);
 }
 
 static int32_t onWrite(uint32_t lba, uint32_t offset, uint8_t *buffer, uint32_t bufsize) {
@@ -75,16 +94,17 @@ void setup() {
   // Initialize TFT display
   tft.init();
   
-  // Rotate the text by 90 degrees (portrait mode)
-  tft.setRotation(3);  // Adjust the rotation; 2 is 90-degree clockwise
-  
+  // Rotate the text by 270 degrees
+  tft.setRotation(3);  // 270-degree rotation
+
   tft.fillScreen(TFT_BLACK);  // Clear the screen with black background
   tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text color to white with black background
   
-  // Increase font size
-  tft.setTextSize(2);  // Change the text size; adjust the multiplier as needed
+  // Set font size (adjust as needed)
+  tft.setTextSize(2);  // Set to medium size
 
-  sd_init();  // Initialize SD card
+  // Initialize SD card and start printing/logging
+  sd_init();
 
   // Initialize USB Mass Storage
   MSC.vendorID("ESP32");       // max 8 chars
