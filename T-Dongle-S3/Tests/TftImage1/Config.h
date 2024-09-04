@@ -1,5 +1,7 @@
 #pragma once
 
+#define FASTLED_INTERNAL //remove annoying pragma messages -https://github.com/FastLED/FastLED/issues/1169
+
 #define SCREEN_COLOR     TFT_BLACK
 #define TEXT_COLOR       TFT_WHITE
 #define TEXT_BACKGROUND  TFT_BLACK
