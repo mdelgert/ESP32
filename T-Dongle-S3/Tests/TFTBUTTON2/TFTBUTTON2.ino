@@ -7,14 +7,6 @@ TFT_eSPI tft = TFT_eSPI(); // Create an instance of the TFT_eSPI class
 // Create an instance of the OneButton class
 OneButton button(BTN_PIN, true);
 
-// Define screen and text properties
-#define SCREEN_COLOR     TFT_BLACK
-#define TEXT_COLOR       TFT_WHITE
-#define TEXT_BACKGROUND  TFT_BLACK
-#define TEXT_SIZE        2
-#define TEXT_CURSOR_X    20
-#define TEXT_CURSOR_Y    30
-
 // Function declarations
 void handleClick();
 void handleDoubleClick();

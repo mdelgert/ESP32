@@ -1,5 +1,12 @@
 #pragma once
 
+#define SCREEN_COLOR     TFT_BLACK
+#define TEXT_COLOR       TFT_WHITE
+#define TEXT_BACKGROUND  TFT_BLACK
+#define TEXT_SIZE        2
+#define TEXT_CURSOR_X    20
+#define TEXT_CURSOR_Y    30
+
 #define BTN_PIN     0
 
 #define LED_DI_PIN     40
