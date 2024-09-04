@@ -51,7 +51,8 @@ void setup()
   
   //tft.setCursor(0, 0);
   tft.setCursor(20, 30);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK); // Set text color to white and background to black
+  //tft.setTextColor(TFT_WHITE, TFT_BLACK); // Set text color to white and background to black
+  tft.setTextColor(TFT_WHITE);  // Only set the text color, no background color so its transparent
   tft.setTextSize(2); // Set text size to 2x the default size
   tft.println("WIFI!");
 
