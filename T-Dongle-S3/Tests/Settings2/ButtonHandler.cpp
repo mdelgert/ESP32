@@ -37,7 +37,7 @@ void handleVeryLongPress()
 {
     static unsigned long lastMillis = 0;
     if (millis() - lastMillis >= LONG_PRESS) {
-        displayMessage("Reboot");
+        displayMessage("VeryLong!");
         lastMillis = millis();
     }
 }
