@@ -12,3 +12,11 @@ arduino-cli core update-index
 arduino-cli core search esp32
 arduino-cli core install esp32:esp32@2.0.11
 ```
+
+# See options
+https://forum.arduino.cc/t/arduino-cli-teesnsy-notes-questions-documentation/1068881
+https://github.com/arduino/arduino-cli/issues/1869
+
+```bash
+arduino-cli board details --fqbn esp32:esp32:esp32s3 
+```

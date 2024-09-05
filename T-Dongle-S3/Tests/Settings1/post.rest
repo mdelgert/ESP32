@@ -3,4 +3,19 @@
 
 GET {{serverUrl}}/settings/about HTTP/1.1
 
-###
+GET {{serverUrl}}/settings/get HTTP/1.1
+
+POST {{serverUrl}}/settings/update HTTP/1.1
+Content-Type: application/json
+{
+    "device": {
+        "name": "atom1",
+        "setup_mode": true,
+        "admin": "admin",
+        "password": "password"
+    },
+    "wifi": {
+        "ssid": "ssid",
+        "password": "password"
+    }
+}

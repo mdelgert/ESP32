@@ -18,6 +18,15 @@ void handleAboutEndpoint();
 
 void setup()
 {
+    // Initialize serial communication if debugging is enabled
+    if (SERIAL_DEBUG) {
+        Serial.begin(SERIAL_BAUD_RATE);  // Use the configurable baud rate
+        while (!Serial) {
+            // Wait for serial port to connect
+        }
+        Serial.println("Serial debugging enabled.");
+    }
+
     // Initialize the TFT display
     tft.init();
     tft.setRotation(3); // Set rotation to flip the screen
@@ -36,18 +45,16 @@ void setup()
 
     // Connect to Wi-Fi using credentials from ConfigSecure.h
     WiFi.begin(SSID, PASSWORD);
-    //displayMessage("Connecting to WiFi");
-    
+
     // Wait until connected to Wi-Fi
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         displayMessage("Connecting");
     }
-    
+
     // Print the IP address to the TFT screen once connected
     String ipAddress = WiFi.localIP().toString();
-    //displayMessage(("IP: " + ipAddress).c_str());
-    displayMessage(("" + ipAddress).c_str());
+    displayMessage(ipAddress.c_str());
 
     // Setup the web server
     server.on("/settings/about", handleAboutEndpoint); // Define endpoint
@@ -97,6 +104,11 @@ void displayMessage(const char* message)
     tft.fillScreen(SCREEN_COLOR); // Clear the screen with defined screen color
     tft.setCursor(TEXT_CURSOR_X, TEXT_CURSOR_Y);  // Set cursor position
     tft.println(message);  // Print the message to the screen
+
+    // Optionally print the message to the serial monitor if debugging is enabled
+    if (SERIAL_DEBUG) {
+        Serial.println(message);
+    }
 }
 
 // Function to handle the /settings/about endpoint
