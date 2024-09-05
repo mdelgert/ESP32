@@ -15,7 +15,7 @@ Content-Type: application/json
 {
     "device": {
         "name": "atom1",
-        "setup_mode": true,
+        "setup_mode": false,
         "admin": "admin",
         "password": "password"
     },

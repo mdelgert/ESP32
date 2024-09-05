@@ -1,70 +1,42 @@
 #include <Preferences.h>
 #include <ArduinoJson.h>
 #include "SettingsHandler.h"
+#include "ConfigSecure.h"  // Include the fallback values
 
 Preferences preferences;
+const char* SETTINGS_NAMESPACE = "device_settings";
+const char* SETTINGS_KEY = "settings";
 
-bool saveSettings(const String& jsonString) {
-    StaticJsonDocument<512> doc;
-    DeserializationError error = deserializeJson(doc, jsonString);
-    if (error) {
-        return false;
+DeviceSettings getParsedSettings() {
+    DeviceSettings settings;
+
+    preferences.begin(SETTINGS_NAMESPACE, true);  // Open preferences in read-only mode
+    String json = preferences.getString(SETTINGS_KEY, "{}");  // Get the saved JSON
+    preferences.end();
+
+    // Parse JSON
+    DynamicJsonDocument doc(1024);
+    DeserializationError error = deserializeJson(doc, json);
+
+    if (error || doc.isNull()) {
+        // Fallback to default values from ConfigSecure.h
+        settings.device_name = DEVICE_NAME;
+        settings.setup_mode = DEVICE_SETUP;
+        settings.admin = DEVICE_ADMIN;
+        settings.device_password = DEVICE_PASSWORD;
+        settings.wifi_ssid = SSID;
+        settings.wifi_password = PASSWORD;
+    } else {
+        // Extract device settings, falling back to ConfigSecure.h if any are missing
+        settings.device_name = doc["device"]["name"] | DEVICE_NAME;
+        settings.setup_mode = doc["device"]["setup_mode"] | DEVICE_SETUP;
+        settings.admin = doc["device"]["admin"] | DEVICE_ADMIN;
+        settings.device_password = doc["device"]["password"] | DEVICE_PASSWORD;
+
+        // Extract Wi-Fi settings, falling back to ConfigSecure.h if any are missing
+        settings.wifi_ssid = doc["wifi"]["ssid"] | SSID;
+        settings.wifi_password = doc["wifi"]["password"] | PASSWORD;
     }
 
-    const char* deviceName = doc["device"]["name"];
-    bool setupMode = doc["device"]["setup_mode"];
-    const char* admin = doc["device"]["admin"];
-    const char* devicePassword = doc["device"]["password"];
-    const char* wifiSSID = doc["wifi"]["ssid"];
-    const char* wifiPassword = doc["wifi"]["password"];
-
-    preferences.begin("device", false);
-    preferences.putString("name", deviceName);
-    preferences.putBool("setup_mode", setupMode);
-    preferences.putString("admin", admin);
-    preferences.putString("password", devicePassword);
-
-    preferences.begin("wifi", false);
-    preferences.putString("ssid", wifiSSID);
-    preferences.putString("password", wifiPassword);
-    preferences.end();
-
-    return true;
-}
-
-String getSettings() {
-    preferences.begin("device", true);
-    String deviceName = preferences.getString("name", "");
-    bool setupMode = preferences.getBool("setup_mode", false);
-    String admin = preferences.getString("admin", "");
-    String devicePassword = preferences.getString("password", "");
-    
-    preferences.begin("wifi", true);
-    String wifiSSID = preferences.getString("ssid", "");
-    String wifiPassword = preferences.getString("password", "");
-    preferences.end();
-
-    if (deviceName.isEmpty() && wifiSSID.isEmpty()) {
-        return "";
-    }
-
-    StaticJsonDocument<512> doc;
-    doc["device"]["name"] = deviceName;
-    doc["device"]["setup_mode"] = setupMode;
-    doc["device"]["admin"] = admin;
-    doc["device"]["password"] = devicePassword;
-    doc["wifi"]["ssid"] = wifiSSID;
-    doc["wifi"]["password"] = wifiPassword;
-
-    String jsonString;
-    serializeJson(doc, jsonString);
-    return jsonString;
-}
-
-void clearSettings() {
-    preferences.begin("device", false);
-    preferences.clear();  // Clear device settings
-    preferences.begin("wifi", false);
-    preferences.clear();  // Clear WiFi settings
-    preferences.end();
+    return settings;
 }

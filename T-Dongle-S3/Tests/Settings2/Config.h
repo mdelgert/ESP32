@@ -11,6 +11,12 @@
 #define PASSWORD "PWD"     // Replace with your Wi-Fi password
 #define SERVER_PORT 80               // Server port
 
+//Device settings
+#define DEVICE_NAME "atom1"
+#define DEVICE_SETUP true
+#define DEVICE_ADMIN "admin"
+#define DEVICE_PASSWORD "password"
+
 // Pin configuration for hardware components
 #define BTN_PIN        0   // Button pin - used for input (single, double, long press)
 #define LED_DI_PIN    40   // LED data input pin
