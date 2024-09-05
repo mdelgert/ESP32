@@ -1,3 +1,5 @@
+//ConfigSecure.h
+
 #pragma once
 
 // Enable serial debug
@@ -5,22 +7,14 @@
 #define SERIAL_BAUD_RATE 115200  // Define the baud rate for serial communication
 
 // Wifi settings
-#define SSID "CHANGEME"             // Replace with your SSID
-#define PASSWORD "PASSWORD"     // Replace with your Wi-Fi password
+#define SSID "IOT1"             // Replace with your SSID
+#define PASSWORD "PWD"     // Replace with your Wi-Fi password
 #define SERVER_PORT 80               // Server port
 
 // Pin configuration for hardware components
 #define BTN_PIN        0   // Button pin - used for input (single, double, long press)
 #define LED_DI_PIN    40   // LED data input pin
 #define LED_CI_PIN    39   // LED clock input pin
-
-// TFT display pin configuration
-#define TFT_CS_PIN     4   // TFT chip select pin
-#define TFT_SDA_PIN    3   // TFT serial data pin
-#define TFT_SCL_PIN    5   // TFT serial clock pin
-#define TFT_DC_PIN     2   // TFT data/command control pin
-#define TFT_RES_PIN    1   // TFT reset pin
-#define TFT_LEDA_PIN  38   // TFT backlight control pin
 
 // SD MMC (MicroSD card) pin configuration
 #define SD_MMC_D0_PIN  14  // SD MMC data line 0
@@ -43,3 +37,11 @@
 #define TEXT_SIZE        2          // Text size for display
 #define TEXT_CURSOR_X    5         // Initial X position for text cursor
 #define TEXT_CURSOR_Y    5         // Initial Y position for text cursor
+
+// TFT display pin configuration
+#define TFT_CS_PIN     4   // TFT chip select pin
+#define TFT_SDA_PIN    3   // TFT serial data pin
+#define TFT_SCL_PIN    5   // TFT serial clock pin
+#define TFT_DC_PIN     2   // TFT data/command control pin
+#define TFT_RES_PIN    1   // TFT reset pin
+#define TFT_LEDA_PIN  38   // TFT backlight control pin
