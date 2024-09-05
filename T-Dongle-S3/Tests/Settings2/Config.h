@@ -15,7 +15,7 @@
 #define DEVICE_NAME "atom1"
 #define DEVICE_SETUP true
 #define DEVICE_ADMIN "admin"
-#define DEVICE_PASSWORD "password"
+#define DEVICE_PASSWORD "12345678"
 
 // Pin configuration for hardware components
 #define BTN_PIN        0   // Button pin - used for input (single, double, long press)

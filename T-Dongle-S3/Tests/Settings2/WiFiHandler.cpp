@@ -1,3 +1,5 @@
+//WiFiHandler.cpp
+
 #include <WiFi.h>
 #include "WiFiHandler.h"
 #include "DisplayHandler.h"
@@ -8,18 +10,28 @@ void initializeWiFi()
     // Get settings from SettingsHandler
     DeviceSettings settings = getParsedSettings();
 
-    // Set the device name as the network hostname
-    WiFi.setHostname(settings.device_name.c_str());
+    if (settings.setup_mode) {
+        // displayMessage("Setup");
+        // delay(3000);
 
-    // Use the SSID and password from the settings
-    WiFi.begin(settings.wifi_ssid.c_str(), settings.wifi_password.c_str());
+        // If setup mode is true, set up the device as a wireless access point
+        WiFi.softAP(settings.device_name.c_str(), settings.device_password.c_str());
 
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        displayMessage("Connecting...");
+        String ipAddress = WiFi.softAPIP().toString();  // Get the IP address of the access point
+        displayMessage(ipAddress.c_str());  // Display IP only
+    } else {
+        // Set the device name as the network hostname
+        WiFi.setHostname(settings.device_name.c_str());
+
+        // Use the SSID and password from the settings to connect to Wi-Fi
+        WiFi.begin(settings.wifi_ssid.c_str(), settings.wifi_password.c_str());
+
+        while (WiFi.status() != WL_CONNECTED) {
+            delay(500);
+        }
+
+        // Display the IP address when connected
+        String ipAddress = WiFi.localIP().toString();
+        displayMessage(ipAddress.c_str());  // Display IP only
     }
-
-    // Display the IP address when connected
-    String ipAddress = WiFi.localIP().toString();
-    displayMessage(ipAddress.c_str());
 }
