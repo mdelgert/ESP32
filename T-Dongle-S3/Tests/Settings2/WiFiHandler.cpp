@@ -14,6 +14,9 @@ void initializeWiFi()
         // displayMessage("Setup");
         // delay(3000);
 
+        // displayMessage(settings.device_password.c_str());
+        // delay(3000);
+
         // If setup mode is true, set up the device as a wireless access point
         WiFi.softAP(settings.device_name.c_str(), settings.device_password.c_str());
 

@@ -4,10 +4,12 @@
 #include "WebServerHandler.h"
 #include "DisplayHandler.h"
 #include "ConfigSecure.h"
-#include "SettingsHandler.h"  // Include the new settings handler
+#include "SettingsHandler.h"
+#include "SettingsPageHTML.h"  // Include the HTML page
 
 WebServer server(SERVER_PORT);
 
+// Reboot endpoint handler
 void handleRebootEndpoint() {
     displayMessage("Rebooting");
     String jsonResponse = "{\"action\": \"reboot\"}";
@@ -16,6 +18,7 @@ void handleRebootEndpoint() {
     ESP.restart();
 }
 
+// Update settings endpoint handler
 void handleUpdateSettingsEndpoint() {
     if (server.hasArg("plain")) {
         String body = server.arg("plain");
@@ -27,19 +30,27 @@ void handleUpdateSettingsEndpoint() {
     }
 }
 
+// Get settings endpoint handler
 void handleGetSettingsEndpoint() {
     String savedSettings = getSettings();  // Retrieve the saved JSON
     server.send(200, "application/json", savedSettings);
 }
 
+// Serve the HTML settings page at "/"
+void handleRoot() {
+    server.send(200, "text/html", settingsPageHTML); // Send the HTML page
+}
+
+// Initialize the server and define routes
 void initializeServer() {
-    server.on("/settings/about", handleAboutEndpoint);
+    server.on("/", handleRoot);  // Serve the root HTML page
     server.on("/device/reboot", handleRebootEndpoint);  // Add reboot endpoint
     server.on("/settings/update", handleUpdateSettingsEndpoint);  // Add update settings endpoint
     server.on("/settings/get", handleGetSettingsEndpoint);  // Add get settings endpoint
     server.begin();
 }
 
+// Handle incoming web server requests
 void handleWebServer() {
     server.handleClient();
 }
