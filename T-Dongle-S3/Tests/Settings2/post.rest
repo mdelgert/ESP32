@@ -7,8 +7,11 @@ GET {{serverUrl}}/settings/about HTTP/1.1
 
 GET {{serverUrl}}/settings/get HTTP/1.1
 
-POST {{serverUrl}}/settings/update HTTP/1.1
+GET {{serverUrl}}/settings/clear HTTP/1.1
+
+POST {{serverUrl}}/settings/update
 Content-Type: application/json
+
 {
     "device": {
         "name": "atom1",

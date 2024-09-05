@@ -4,4 +4,4 @@ Pleasea add endpoint /device/reboot to this code that reboots the device. This i
 
 Add endpoint to this code that accepts the following json message body at endpoint /settings/update after the message is received print it to and save it to memory to work after reboot.
 
-
+Please make this code really simple and extract related into separate files using best practices.
