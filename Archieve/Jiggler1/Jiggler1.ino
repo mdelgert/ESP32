@@ -12,8 +12,8 @@
 #include "ConfigPins.h"
 
 // Define custom USB product name, manufacturer, and serial number
-#define CUSTOM_PRODUCT_NAME "PassTxt_Usb"
-#define CUSTOM_MANUFACTURER "PassTxt"
+#define CUSTOM_PRODUCT_NAME "Demo_Usb"
+#define CUSTOM_MANUFACTURER "DemoTxt"
 #define CUSTOM_SERIAL_NUMBER "1234567890"
 
 using namespace websockets;
