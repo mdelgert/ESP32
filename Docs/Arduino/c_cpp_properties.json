@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/mdelgert/.arduino15/packages/esp32/hardware/esp32/**",
+                "/home/mdelgert/Arduino/libraries/**",
+                "/home/mdelgert/.arduino15/packages/esp32/hardware/esp32/2.0.17/tools/sdk/esp32/include/xtensa/include/**",
+                "/home/mdelgert/.arduino15/packages/esp32/hardware/esp32/2.0.17/tools/sdk/esp32s2/include/xtensa/include/**",
+                "/home/mdelgert/.arduino15/packages/esp32/hardware/esp32/2.0.17/tools/sdk/esp32s3/include/xtensa/include/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
