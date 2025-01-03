@@ -52,5 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Ignore secure files
+build/
 SecureConfig.h
 ConfigSecure.h
+ConfigDeviceSecure.h

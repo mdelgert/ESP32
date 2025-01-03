@@ -1,0 +1,25 @@
+Topic: homeassistant/sensor/temp1/sht4x/state
+{"temperature": 22.29, "humidity": 40.13}
+
+Topic: homeassistant/sensor/temp1/bmp280/state
+{"temperature": 22.72, "pressure": 96060.00, "altitude": 447.87}
+
+{
+    "name": "sensor1_bmp280_temperature",
+    "unique_id": "sensor1_temperature",
+    "state_topic": "homeassistant/sensor/sensor1/bmp280/state",
+    "unit_of_measurement": "°C",
+    "device_class": "temperature",
+    "device": {
+        "identifiers": ["sensor1"],
+        "name": "sensor1"
+    }
+}
+
+{
+    "name": "temp1 Humidity",
+    "state_topic": "homeassistant/sensor/temp1/sht4x/state",
+    "unit_of_measurement": "%",
+    "value_template": "{{ value_json.humidity }}",
+    "device_class": "humidity"
+}

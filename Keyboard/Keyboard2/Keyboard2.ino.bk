@@ -1,0 +1,89 @@
+#include "Adafruit_TinyUSB.h"
+
+/* This sketch demonstrates USB HID keyboard typing "hello" in a loop */
+
+// HID report descriptor using TinyUSB's template
+uint8_t const desc_hid_report[] = {
+    TUD_HID_REPORT_DESC_KEYBOARD()
+};
+
+// USB HID object
+Adafruit_USBD_HID usb_hid;
+
+// Setup function runs once at startup
+void setup() {
+  // Manual TinyUSB initialization (if required)
+  //if (!TinyUSBDevice.isInitialized()) {
+  //  TinyUSBDevice.begin(0);
+ // }
+
+  TinyUSBDevice.begin(0);
+  // Setup HID
+  usb_hid.setBootProtocol(HID_ITF_PROTOCOL_KEYBOARD);
+  usb_hid.setPollInterval(2);
+  usb_hid.setReportDescriptor(desc_hid_report, sizeof(desc_hid_report));
+  usb_hid.setStringDescriptor("TinyUSB Keyboard");
+
+  usb_hid.begin();
+
+  // Re-attach USB for enumeration
+  if (TinyUSBDevice.mounted()) {
+    TinyUSBDevice.detach();
+    delay(10);
+    TinyUSBDevice.attach();
+  }
+
+  // LED pin for status
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
+
+  // Wait for USB to mount
+  while (!TinyUSBDevice.mounted()) {
+    delay(10);
+  }
+
+  Serial.begin(115200);
+  Serial.println("TinyUSB HID Keyboard Initialized");
+}
+
+void loop() {
+  // Ensure HID is ready
+  if (!usb_hid.ready()) return;
+
+  // Type "hello" with a 1-second delay
+  typeMessage("hello");
+  delay(1000); // Wait 1 second before repeating
+}
+
+void typeMessage(const char* message) {
+  while (*message) {
+    // Convert ASCII character to HID keycode
+    uint8_t keycode = asciiToHID(*message);
+
+    if (keycode) {
+      uint8_t key_report[6] = { keycode, 0, 0, 0, 0, 0 };
+
+      usb_hid.keyboardReport(0, 0, key_report); // Press key
+      delay(100);                              // Key press duration
+      usb_hid.keyboardRelease(0);              // Release key
+    }
+
+    message++;
+    delay(50); // Short delay between characters
+  }
+
+  // Press and release Enter key after typing the message
+  uint8_t enter_key[6] = { HID_KEY_ENTER, 0, 0, 0, 0, 0 };
+  usb_hid.keyboardReport(0, 0, enter_key);
+  delay(100);
+  usb_hid.keyboardRelease(0);
+
+  Serial.println("Typed: hello");
+}
+
+uint8_t asciiToHID(char c) {
+  if (c >= 'a' && c <= 'z') return HID_KEY_A + (c - 'a'); // Lowercase a-z
+  if (c >= 'A' && c <= 'Z') return HID_KEY_A + (c - 'A'); // Uppercase A-Z
+  if (c == ' ') return HID_KEY_SPACE;                    // Space
+  return 0;                                              // Unsupported char
+}
