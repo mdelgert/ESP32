@@ -53,6 +53,13 @@ dkms.conf
 
 # Ignore secure files
 build/
+Secure.h
 SecureConfig.h
 ConfigSecure.h
 ConfigDeviceSecure.h
+
+# Ignore IDE files
+.pio
+.idea
+.vscode
+
