@@ -1,16 +1,6 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
-
-// WiFi settings
-const char *ssid = "WIFI_SSID";             // Replace with your WiFi name
-const char *password = "WIFI_PASSWORD";    // Replace with your WiFi password
-
-// MQTT Broker settings
-const char *mqtt_broker = "broker.emqx.io"; // EMQX broker endpoint
-const char *mqtt_topic = "emqx/esp32";      // MQTT topic
-const char *mqtt_username = "emqx";         // MQTT username for authentication
-const char *mqtt_password = "public";       // MQTT password for authentication
-const int mqtt_port = 1883;                 // MQTT port (TCP)
+#include "Secure.h"
 
 // Initialize WiFi and MQTT clients
 WiFiClient espClient;
